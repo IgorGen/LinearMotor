@@ -1,0 +1,12 @@
+{
+    "LinearMotor_primary": {
+        "type": "X-LSQ",
+        "sn": 123456,
+        "device_mgr_name": "USB Serial Device"
+    },
+    "LinearMotor_secondary": {
+        "type": "X-LSQ",
+        "sn": 987654,
+        "device_mgr_name": "USB Serial Device"
+    }
+}

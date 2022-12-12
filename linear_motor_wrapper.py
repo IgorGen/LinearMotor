@@ -13,17 +13,18 @@ class LinearMotorWrapper(object):
     """
     Represents Linear Motor Wrapper.
     """
-    def __init__(self, logger, com_port: str = '') -> None:
+    def __init__(self, logger, serial_number, device_mgr_name, com_port: str = '') -> None:
         self.logger = logger
-        self.com_port = com_port if com_port else LinearMotorWrapper.recognize_com_port()
-        self.connection = self.open_com_port()  #TMP!!!!!!!!!
-        self.device = self.get_device()
+        self.sn = serial_number
+        self.device_mgr_name = device_mgr_name
+        self.com_port = com_port if com_port else self.recognize_com_port()
+        self.connection = None  # self.open_com_port()
+        self.device = None  # self.get_device()
         self.axis = self.get_axis()
         self.define_axis_position()
         self.logger.debug(f'Init LinearMotorWrapper, COM-port{self.com_port}')
 
-    @staticmethod
-    def recognize_com_port() -> str:
+    def recognize_com_port(self) -> str:
         com_port = ''
         if sys.platform == 'win32':
             from infi.devicemanager import DeviceManager
@@ -36,16 +37,28 @@ class LinearMotorWrapper(object):
             for device in devices:
                 if port_found:
                     break
-                name = device.friendly_name if device.has_property("friendly_name") else device.description
-                # if 'USB' in name and 'COM' in name: # TMP - should use line below
-                # if 'USB Serial Port' in name and 'COM' in name:  # check name is correct
-                if 'USB Serial Port' in name and 'COM' in name:  # check name is correct
-                    parse_name = name.split()
-                    for item in parse_name:
-                        if 'COM' in item:
-                            com_port = item.strip('()')
-                            port_found = True
-                            break
+                try:
+                    name = device.friendly_name if device.has_property("friendly_name") else device.description
+                    # if 'USB' in name and 'COM' in name: # TMP - should use line below
+                    # if 'USB Serial Port' in name and 'COM' in name:  # check name is correct
+                    if self.device_mgr_name in name and 'COM' in name:
+                        parse_name = name.split()
+                        for item in parse_name:
+                            if 'COM' in item:
+                                com_port = item.strip('()')
+                                connection = self.open_com_port(com_port)
+                                devices = connection.detect_devices()
+                                device = devices[0]
+                                if device.serial_number == self.sn:
+                                    self.connection = connection
+                                    self.device = device
+                                    port_found = True
+                                    break
+                                else:
+                                    connection.close()
+                                    com_port = ''
+                except Exception as ex:
+                    continue
         else:
             import serial.tools.list_ports as list_ports
 
@@ -62,12 +75,12 @@ class LinearMotorWrapper(object):
 
         return com_port
 
-    def open_com_port(self) -> Connection:
+    def open_com_port(self, com_port) -> Connection:
         """
         Open COM-port, gets Connection class instance.
         """
         try:
-            connection = Connection.open_serial_port(self.com_port)
+            connection = Connection.open_serial_port(com_port)
             return connection
         except (NoDeviceFoundException, ConnectionFailedException) as ex:
             # print("No device found on the specified port")
