@@ -17,6 +17,8 @@ class LinearMotorWrapper(object):
         self.logger = logger
         self.sn = serial_number
         self.device_mgr_name = device_mgr_name
+        self.connection = None
+        self.device = None
         self.com_port = com_port if com_port else self.recognize_com_port()
         self.connection = None  # self.open_com_port()
         self.device = None  # self.get_device()
@@ -156,7 +158,7 @@ class LinearMotorWrapper(object):
             msg = f'Starting go to absolute position: {position}'
             print(msg)
             self.logger.debug(msg)
-            # self.axis.move_absolute(position, unit, wait_until_idle)
+            self.axis.move_absolute(position, unit, wait_until_idle)
             self.logger.debug(f'move_absolut to {position} position')
         except MovementFailedException as ex:
             print(ex)
@@ -177,7 +179,7 @@ class LinearMotorWrapper(object):
             msg = f'Starting go to relative position: {position}'
             print(msg)
             self.logger.debug(msg)
-            # self.axis.move_relative(position, unit, wait_until_idle)
+            self.axis.move_relative(position, unit, wait_until_idle)
             self.logger.debug(f'move_absolut to {position} position')
         except MovementFailedException as ex:
             print(ex)

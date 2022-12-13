@@ -1,12 +1,27 @@
-{
-    "LinearMotor_primary": {
+[
+    {
         "type": "X-LSQ",
-        "sn": 123456,
-        "device_mgr_name": "USB Serial Device"
+        "properties": [
+            {
+                "index": 0,
+                "sn": 123456,
+                "device_mgr_name": "USB Serial Device"
+            },
+            {
+                "index": 1,
+                "sn": 987654,
+                "device_mgr_name": "USB Serial Device"
+            }
+        ]
     },
-    "LinearMotor_secondary": {
-        "type": "X-LSQ",
-        "sn": 987654,
-        "device_mgr_name": "USB Serial Device"
+    {
+        "type": "X-LRQ",
+        "properties": [
+            {
+                "index": 0,
+                "sn": 876485,
+                "device_mgr_name": "USB Serial Device"
+            }
+        ]
     }
-}
+]
