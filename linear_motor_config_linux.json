@@ -1,0 +1,27 @@
+[
+    {
+        "type": "X-LSQ",
+        "properties": [
+            {
+                "index": 0,
+                "sn": 123456,
+                "device_mgr_name": "FT232R"
+            },
+            {
+                "index": 1,
+                "sn": 987654,
+                "device_mgr_name": "FT232R"
+            }
+        ]
+    },
+    {
+        "type": "X-LRQ",
+        "properties": [
+            {
+                "index": 0,
+                "sn": 876485,
+                "device_mgr_name": "FT232R"
+            }
+        ]
+    }
+]
