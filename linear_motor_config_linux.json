@@ -4,12 +4,8 @@
         "properties": [
             {
                 "index": 0,
-                "sn": 123456,
-                "device_mgr_name": "FT232R"
-            },
-            {
-                "index": 1,
-                "sn": 987654,
+                "sn": 105018,
+                "id": 50137,
                 "device_mgr_name": "FT232R"
             }
         ]

@@ -28,6 +28,7 @@ class LinearMotorWrapper(object):
 
     def recognize_com_port(self) -> str:
         com_port = ''
+        # port_found = False
         if sys.platform == 'win32':
             from infi.devicemanager import DeviceManager
 
@@ -66,12 +67,24 @@ class LinearMotorWrapper(object):
 
             comports = list_ports.comports()
             for comport_obj in comports:
+                # if port_found:
+                #     break
                 if comport_obj is None:
                     continue
                 # product = comport_obj.product
                 if 'FT232R' in comport_obj.product:
                     com_port = comport_obj.device
-                    break
+                    connection = self.open_com_port(com_port)
+                    devices = connection.detect_devices()
+                    device = devices[0]
+                    if device.serial_number == self.sn:
+                        self.connection = connection
+                        self.device = device
+                        # port_found = True
+                        break
+                    else:
+                        connection.close()
+                        # com_port = ''
             else:
                 com_port = '/dev/ttyUSB0'
 
