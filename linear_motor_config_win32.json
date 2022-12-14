@@ -4,13 +4,9 @@
         "properties": [
             {
                 "index": 0,
-                "sn": 123456,
-                "device_mgr_name": "USB Serial Device"
-            },
-            {
-                "index": 1,
-                "sn": 987654,
-                "device_mgr_name": "USB Serial Device"
+                "sn": 105018,
+                "id": 50137,
+                "device_mgr_name": "USB Serial Port"
             }
         ]
     },
@@ -20,7 +16,7 @@
             {
                 "index": 0,
                 "sn": 876485,
-                "device_mgr_name": "USB Serial Device"
+                "device_mgr_name": "USB Serial Port"
             }
         ]
     }

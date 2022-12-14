@@ -6,7 +6,7 @@ import json
 import sys
 import logging
 
-STOPPER_POSITION = 40
+STOPPER_POSITION = 130
 
 
 class LinearMotorWrapper(object):
@@ -20,8 +20,8 @@ class LinearMotorWrapper(object):
         self.connection = None
         self.device = None
         self.com_port = com_port if com_port else self.recognize_com_port()
-        self.connection = None  # self.open_com_port()
-        self.device = None  # self.get_device()
+        # self.connection = None  # self.open_com_port()
+        # self.device = None  # self.get_device()
         self.axis = self.get_axis()
         self.define_axis_position()
         self.logger.debug(f'Init LinearMotorWrapper, COM-port{self.com_port}')
@@ -117,6 +117,11 @@ class LinearMotorWrapper(object):
             print(ex)
             self.logger.error(ex)
             raise ex
+        except AttributeError as ex:
+            print(ex)
+            self.logger.error(ex)
+            raise ex
+
 
     def define_axis_position(self) -> None:
         """

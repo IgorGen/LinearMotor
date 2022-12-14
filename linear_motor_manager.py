@@ -2,6 +2,8 @@ import json
 import os
 import sys
 import logging
+import time
+
 from linear_motor_wrapper import LinearMotorWrapper
 from dummy_motor_wrapper import DummyMotorWrapper
 
@@ -9,7 +11,6 @@ MOTOR_TYPE2CLASS = {
     'X-LSQ': LinearMotorWrapper,
     'X-LRQ': DummyMotorWrapper
 }
-
 
 
 class LinearMotorManager(object):
@@ -57,11 +58,16 @@ class LinearMotorManager(object):
 def main():
     logger = logging.getLogger("LinearMotorWrapper")
     mgr = LinearMotorManager(logger)  #, X_LSQ=2)
-    mgr.move_absolute('X-LSQ', 0, 90)
-    mgr.move_absolute('X-LSQ', 1, 120)
+    mgr.move_absolute('X-LSQ', 0, 140)
+    time.sleep(1)
+    mgr.move_absolute('X-LSQ', 0, 145)
+    time.sleep(2)
+    mgr.move_absolute('X-LSQ', 0, 135)
+    time.sleep(2)
+    mgr.move_absolute('X-LRQ', 0, 145)  # Dummy
 
-    mgr.move_relative('X-LRQ', 0, 7)
-    mgr.move_relative('X-LRQ', 1, -18)
+    mgr.move_relative('X-LSQ', 0, -5)
+    mgr.move_relative('X-LRQ', 0, -18)  # Dummy
 
 
 if __name__ == '__main__':
