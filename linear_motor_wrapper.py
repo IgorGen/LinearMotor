@@ -20,8 +20,6 @@ class LinearMotorWrapper(object):
         self.connection = None
         self.device = None
         self.com_port = com_port if com_port else self.recognize_com_port()
-        # self.connection = None  # self.open_com_port()
-        # self.device = None  # self.get_device()
         self.axis = self.get_axis()
         self.define_axis_position()
         self.logger.debug(f'Init LinearMotorWrapper, COM-port{self.com_port}')
@@ -41,8 +39,6 @@ class LinearMotorWrapper(object):
                     break
                 try:
                     name = device.friendly_name if device.has_property("friendly_name") else device.description
-                    # if 'USB' in name and 'COM' in name: # TMP - should use line below
-                    # if 'USB Serial Port' in name and 'COM' in name:  # check name is correct
                     if self.device_mgr_name in name and 'COM' in name:
                         parse_name = name.split()
                         for item in parse_name:
@@ -121,7 +117,6 @@ class LinearMotorWrapper(object):
             print(ex)
             self.logger.error(ex)
             raise ex
-
 
     def define_axis_position(self) -> None:
         """
